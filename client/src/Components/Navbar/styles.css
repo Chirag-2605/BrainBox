@@ -8,4 +8,10 @@
 .nav-link {
     font-size: 1.2rem;
     margin-right: 2rem;
+    border-bottom: 2px solid transparent;
+    transition: .5s;
+}
+
+.nav-link:hover{
+    border-bottom: 2px solid black;
 }

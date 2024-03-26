@@ -23,7 +23,7 @@ const Login = () => {
             const url = "http://localhost:8080/api/auth";
             const {data:res} = await axios.post(url,data);
             localStorage.setItem("token",res.data);
-            window.location = "/"
+            window.location = "/home"
         } catch (error) {
             if(error.response && error.response.status>=400 && error.response.status<=500){
                 setError(error.response.data.message);

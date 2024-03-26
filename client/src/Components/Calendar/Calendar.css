@@ -1,0 +1,245 @@
+* {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+body {
+    background-color: #050815;
+    overflow: hidden;
+}
+
+/* Calendar Container */
+.calendar-container {
+    margin: 2rem 4rem !important;
+    height: 89.4vh;
+    width: 94% !important;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.fc-timegrid-slots colgroup col{
+    margin: 0;
+    padding: 0;
+    width: 8.5rem !important;
+}
+
+.fc-scrollgrid-shrink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fc-media-screen {
+    height: 100% !important;
+    width: 90% !important;
+    margin: 4rem 5rem !important;
+    overflow: hidden;
+}
+
+.fc-header-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem !important;
+    height: 4rem;
+    overflow: hidden;
+}
+
+/* Calendar Header */
+.fc-toolbar {
+    color: #fff;
+    border: none;
+}
+
+/* Calendar Event */
+.fc-event {
+    border: none;
+}
+
+/* Calendar Today Indicator */
+.fc-today {
+    background-color: rgba(66, 133, 244, 0.1);
+}
+
+/* Calendar Event Title */
+.fc-event-title {
+    font-weight: bold;
+}
+
+/* Calendar Button */
+.fc-button {
+    border: none;
+    margin-right: 2rem !important;
+    border-radius: 10px !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 1.05rem !important;
+}
+
+.fc-scrollgrid-sync-inner {
+    border-bottom: 1px solid white !important;
+    padding: 0.3rem 0.5rem !important;
+}
+
+.fc-prev-button, .fc-next-button {
+    padding: 0.3rem 0.7rem !important;
+}
+
+.fc .fc-timegrid-slot {
+    height: 1.9rem !important;
+}
+
+.fc-day-past, .fc-day-today, .fc-day-future {
+    width: 10.1rem;
+}
+
+a {
+    color: white;
+}
+
+.fc-more-popover {
+    background-color: red;
+}
+
+.fc-event-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.fc-event-time {
+    margin-bottom: 0rem !important;
+}
+
+.fc-event-title {
+    bottom: 10px !important;
+    max-height: fit-content !important;
+    text-align: center;
+    font-size: 0.7rem !important;
+    overflow: hidden !important;
+}
+
+td {
+    border: 1px solid grey !important;
+}
+
+/* Calendar Event Popup */
+.fc-popover {
+    background: linear-gradient(to right, #050815, #1e2433, #3a2e4c, #543766, #6f419a, #854bc0, #9f6fea, #b7a4ff) !important;
+    margin-right: 3rem !important;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: 11.36rem;
+}
+
+/* Calendar Event Popup Close Button */
+.fc-close {
+    color: #757575;
+}
+
+/* effect */
+.backgroundEffect {
+    height: 15rem;
+    width: 15rem;
+    background: linear-gradient(to right, #050815, #051c36, #053d60, #045f8b, #0577a0, #0a90b6, #05a6cc, #00c3e2);
+    z-index: -1;
+    position: absolute;
+    top: 5rem;
+    right: 0rem;
+    filter: blur(8px);
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    animation: animate 5s ease-in-out infinite;
+}
+
+.backgroundEffect-top{
+    height: 10rem;
+    width: 10rem;
+    background: linear-gradient(to right, #050815, #0a252c, #195e2e, #3e8324, #6fae26, #a5d13a, #cef26f, #f2ffcd);
+    z-index: -1;
+    position: absolute;
+    top: -2rem;
+    left: 10rem;
+    filter: blur(6px);
+    border-radius: 72% 28% 15% 85% / 68% 15% 85% 32%;
+    animation: animate2 12s ease-in-out infinite;
+}
+
+.backgroundEffect-bottom {
+    height: 20rem;
+    width: 20rem;
+    background: linear-gradient(to right, #050815, #192426, #35403c, #4e5d51, #687a68, #88a48a, #adc5af, #d4e5d6);
+    z-index: -1;
+    position: absolute;
+    top: 30rem;
+    left: 10rem;
+    filter: blur(8px);
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    animation: animate 5s ease-in-out infinite;
+}
+
+.fc-scroller::-webkit-scrollbar {
+    width: 15px !important;
+    /* Width of the scrollbar */
+}
+
+.fc-scroller::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1) !important;
+    /* Color of the scrollbar track */
+}
+
+.fc-scroller::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.4) !important;
+    /* Color of the scrollbar thumb */
+    border-radius: 4px !important;
+    /* Rounded corners of the scrollbar thumb */
+}
+
+.fc-scroller::-webkit-scrollbar-thumb:hover {
+    background-color: #555 !important;
+    /* Color of the scrollbar thumb on hover */
+}
+
+
+@keyframes animate {
+    0% {
+        border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    }
+
+    50% {
+        border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
+    }
+
+    100% {
+        border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    }
+}
+
+@keyframes animate2 {
+    0% {
+        border-radius: 72% 28% 15% 85% / 68% 15% 85% 32%;
+    }
+
+    20% {
+        border-radius: 82% 18% 83% 17% / 84% 15% 85% 16%;
+    }
+
+    40% {
+        border-radius: 10% 90% 71% 29% / 17% 77% 23% 83%;
+    }
+
+    60% {
+        border-radius: 10% 90% 13% 87% / 17% 77% 23% 83%;
+    }
+
+    80% {
+        border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    }
+
+    100% {
+        border-radius: 72% 28% 15% 85% / 68% 15% 85% 32%;
+    }
+}

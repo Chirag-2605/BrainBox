@@ -4,7 +4,7 @@ import Home from './Components/Home'
 import Login from './Components/Login'
 import Signup from './Components/Signup'
 import Landing from './Components/Landing';
-
+import Calendar from './Components/Calendar/Calendar';
 
 function App() {
   const user = localStorage.getItem("token");
@@ -15,6 +15,8 @@ function App() {
       <Route path='/login' element={<Login />}></Route>
       <Route path='/' element={<Navigate replace to='/landing' />}></Route>
       <Route path='/landing' element={<Landing />}></Route>
+      <Route path='/home' element={<Home></Home>}></Route>
+      <Route path='/calendar' element={<Calendar></Calendar>}></Route>
     </Routes>
   );
 }
