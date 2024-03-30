@@ -1,17 +1,18 @@
-.navbar {
+.container-fluid {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     height: 4.5rem !important;
+    margin-left: 3rem !important;
 }
 
 .nav-link {
-    font-size: 1.2rem;
-    margin-right: 2rem;
-    border-bottom: 2px solid transparent;
-    transition: .5s;
+    font-size: 1.2rem !important;
+    margin-left: 4rem !important;
+    border-bottom: 2px solid transparent !important;
+    transition: .5s !important;
 }
 
 .nav-link:hover{
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid black !important;
 }

@@ -55,7 +55,6 @@ const Login = () => {
                         Sign up
                     </button>
                     </Link>
-                    
                 </div>
             </div>
             <div className='image' style={{marginRight:'5rem'}}><img src={loginImage} alt="Logo" /></div>

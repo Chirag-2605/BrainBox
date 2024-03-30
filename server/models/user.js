@@ -70,4 +70,4 @@ const validate = (data) => {
     return schema.validate(data);
 }
 
-module.exports = { User, validate, cardSchema, columnSchema, kanbanTodoSchema };
+module.exports = { User, validate, cardSchema, columnScehma, kanbanTodoSchema };
