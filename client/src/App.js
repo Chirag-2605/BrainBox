@@ -5,7 +5,7 @@ import Login from './Components/Login'
 import Signup from './Components/Signup'
 import Landing from './Components/Landing';
 import Calendar from './Components/Calendar/Calendar';
-
+import Board from './Components/KanbanToDo/Board'
 function App() {
   const user = localStorage.getItem("token");
   return (
@@ -17,6 +17,8 @@ function App() {
       <Route path='/landing' element={<Landing />}></Route>
       <Route path='/home' element={<Home></Home>}></Route>
       <Route path='/calendar' element={<Calendar></Calendar>}></Route>
+      <Route path='/board' element={<Board></Board>}></Route>
+      
     </Routes>
   );
 }
