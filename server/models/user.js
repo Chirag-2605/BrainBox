@@ -3,6 +3,28 @@ const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const passwordComplexity = require('joi-password-complexity');
 
+const cardSchema=new mongoose.Schema({
+    title:{
+        type:String,
+        required:true
+
+    }
+})
+const columnScehma=new mongoose.Schema({
+    title:{
+        type:String,
+        required:true
+    },
+    cards:[cardSchema]
+})
+const kanbanTodoSchema=new mongoose.Schema({
+    title:{
+        type:String,
+        required:true
+
+    },
+    columns:[columnScehma]
+})
 const userSchema = new mongoose.Schema({
     firstName : {
         type:String,
@@ -24,6 +46,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    kanbanTodos: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'KanbanToDo'
+    }]
 });
 
 userSchema.methods.generateAuthToken = function() {
@@ -44,4 +70,4 @@ const validate = (data) => {
     return schema.validate(data);
 }
 
-module.exports = {User, validate};
+module.exports = { User, validate, cardSchema, columnSchema, kanbanTodoSchema };
