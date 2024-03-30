@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { FiTrash } from "react-icons/fi";
 import { FaFire } from "react-icons/fa";
+import axios from "axios";
 const BurnBarrel = ({ setCards }) => {
   const [active, setActive] = useState(false);
 

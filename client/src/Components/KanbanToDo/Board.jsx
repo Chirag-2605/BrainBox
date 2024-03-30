@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Column from "./Column";
 import BurnBarrel from "./BurnBarrel";
-import { DEFAULT_CARDS } from "../data";
-
+import { DEFAULT_CARDS } from "../../data";
+import axios from "axios";
 const Board = ({title}) => {
   const [columns, setColumns] = useState([]);
   const [cards, setCards] = useState([]);
@@ -16,20 +16,27 @@ const Board = ({title}) => {
           setCards(data.cards);
         } else {
           // Set default columns and cards if no data is returned from the backend
-          setDefaultColumns({ id: 1, title: "Backlog", column: "backlog", headingColor: "text-neutral-500" },
-          { id: 2, title: "TODO", column: "todo", headingColor: "text-yellow-200" },
-          { id: 3, title: "In progress", column: "doing", headingColor: "text-blue-200" },
-          { id: 4, title: "Complete", column: "done", headingColor: "text-emerald-200" });
-          setDefaultCards(DEFAULT_CARDS);
+          setColumns([
+            { id: 1, title: "Backlog", column: "backlog", headingColor: "text-neutral-500" },
+            { id: 2, title: "TODO", column: "todo", headingColor: "text-yellow-200" },
+            { id: 3, title: "In progress", column: "doing", headingColor: "text-blue-200" },
+            { id: 4, title: "Complete", column: "done", headingColor: "text-emerald-200" }
+          ]);
+          setCards(DEFAULT_CARDS);
         }
       })
       .catch(error => {
         console.error("Error fetching Kanban data:", error);
         // Set default columns and cards in case of an error
-        response.json({msg:"Oops something happened"});
+        setColumns([
+          { id: 1, title: "Backlog", column: "backlog", headingColor: "text-neutral-500" },
+          { id: 2, title: "TODO", column: "todo", headingColor: "text-yellow-200" },
+          { id: 3, title: "In progress", column: "doing", headingColor: "text-blue-200" },
+          { id: 4, title: "Complete", column: "done", headingColor: "text-emerald-200" }
+        ]);
+        setCards(DEFAULT_CARDS);
       });
   }, []);
-
   const addColumn = () => {
     const newColumn = {
       id: Date.now(), // Generating unique id for the column

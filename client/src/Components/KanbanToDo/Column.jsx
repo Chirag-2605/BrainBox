@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Card from "./Card";
 import DropIndicator from "./DropIndicator";
 import AddCard from "./AddCard";
-
+import axios from "axios";
 
 const Column = ({ title, headingColor, cards, column, setCards }) => {
   const [editedTitle, setEditedTitle] = useState(title);
   const [isEditing, setIsEditing] = useState(false);
   const [active, setActive] = useState(false);
+  const [columnId, setColumnId] = useState(null);
 
   useEffect(() => {
     // Fetch column data when the component mounts
