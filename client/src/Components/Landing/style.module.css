@@ -13,6 +13,10 @@
     z-index: 2;
 }
 
+.heading {
+    font-size: 2rem;
+}
+
 .earth {
     height: 30rem;
     width: 50%;
@@ -39,24 +43,18 @@
     pointer-events: none;
 }
 
-.heading {
-    animation: showRight;
-}
-
 .btnLanding {
     background-color: #ff7f00;
-    /* Orange color for buttons */
     color: #ffffff;
-    /* White text color for buttons */
     border: none;
     padding: 10px 20px !important;
     margin-top: 1rem !important;
     border-radius: 5px;
-    cursor: pointer;
     transition: background-color 0.3s ease;
+    cursor: pointer;
     z-index: 10;
 }
 
 .btnLanding:hover {
-    background-color: #d66c00;
+    background-color: #d66c00 !important;
 }

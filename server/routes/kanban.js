@@ -3,7 +3,7 @@ const router = express.Router();
 const {kanbanTodoSchema:KanbanTodo} = require('../models/user.js');
 
 // Create a new Kanban Todo
-router.post('/api/kanban-todos', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { title, columns } = req.body;
         const newKanbanTodo = new KanbanTodo({ title, columns });
@@ -15,7 +15,7 @@ router.post('/api/kanban-todos', async (req, res) => {
 });
 
 // Get all Kanban Todos
-router.get('/api/kanban-todos', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const kanbanTodos = await KanbanTodo.find();
         res.json(kanbanTodos);
@@ -25,7 +25,7 @@ router.get('/api/kanban-todos', async (req, res) => {
 });
 
 // Get a Kanban Todo by ID
-router.get('/api/kanban-todos/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const kanbanTodo = await KanbanTodo.findById(req.params.id);
         if (!kanbanTodo) {
@@ -38,7 +38,7 @@ router.get('/api/kanban-todos/:id', async (req, res) => {
 });
 
 // Update a Kanban Todo
-router.put('/api/kanban-todos/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         const { title, columns } = req.body;
         const updatedKanbanTodo = await KanbanTodo.findByIdAndUpdate(
