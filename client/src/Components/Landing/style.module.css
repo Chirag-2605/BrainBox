@@ -2,7 +2,7 @@
     height: 99.61vh;
 }
 
-.container {
+.land_container {
     position: relative;
     height: 90%;
     display: flex;
@@ -11,9 +11,9 @@
     width: 100%;
     background-color: #050815;
     z-index: 2;
-}
+} 
 
-.heading {
+.land_container_heading {
     font-size: 2rem;
 }
 
@@ -24,7 +24,7 @@
     z-index: 3;
 }
 
-.content {
+.land_container_content {
     color: white;
     width: 50%;
     text-align: center;

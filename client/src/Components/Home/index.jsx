@@ -1,19 +1,18 @@
 import styles from './styles.module.css';
-import Navbar from '../Navbar/navbar';
 import React from 'react'
+import Sidebar from '../Sidebar/Sidebar';
 
 const Home = () => {
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        window.location.reload();
-    }
-
+    
     return (
         <div className={styles.home_container}>
-            <Navbar></Navbar>
-            Hii...I am home!!!
+            <div className={styles.sidebar_div}>
+                <Sidebar></Sidebar>
+            </div>
+            <div className={styles.homepage}>
+                Hii...I am home!!!
+            </div>
         </div>
     )
 }
-
 export default Home

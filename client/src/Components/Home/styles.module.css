@@ -1,0 +1,39 @@
+.home_container {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
+    display: flex;
+    background-color: #050815;
+}
+
+.sidebar_div {
+    width: 18.75rem;
+}
+
+.homepage {
+    flex: 1;
+    /* background-color: red !important; */
+    transition: all 0.3s ease-in-out;
+}
+
+.home_container.hide-sidebar .sidebar_div {
+    transform: translateX(-300px);
+    /* Hide sidebar */
+}
+
+.home_container.hide-sidebar .homepage {
+    padding-left: 0;
+    /* No padding on left side */
+}
+
+/* When the sidebar is visible */
+.home_container:not(.hide-sidebar) .sidebar_div {
+    transform: translateX(0);
+    /* Show sidebar */
+}
+
+.home_container:not(.hide-sidebar) .homepage {
+    padding-left: 300px;
+    /* Add padding to match sidebar width */
+}

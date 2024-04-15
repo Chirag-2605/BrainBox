@@ -108,40 +108,41 @@ const Calendar = () => {
     };
 
     return (
+        <div className='calendar_component'>
+            <div className="calendar-container">
+                <div className='backgroundEffect'></div>
+                <div className='backgroundEffect-top'></div>
+                <div className='backgroundEffect-bottom'></div>
+                <FullCalendar
+                        plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+                        headerToolbar={{
 
-        <div className="calendar-container">
-            <div className='backgroundEffect'></div>
-            <div className='backgroundEffect-top'></div>
-            <div className='backgroundEffect-bottom'></div>
-            <FullCalendar
-                    plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-                    headerToolbar={{
-
-                        left: 'prev,next today',
-                        center: "title",
-                        right: "dayGridMonth,timeGridWeek,timeGridDay"
-                    }}
-                    allDaySlot={false}
-                    initialView="timeGridWeek"
-                    slotDuration={"01:00:00"}
-                    editable={true}
-                    selectable={true}
-                    selectMirror={true}
-                    dayMaxEvents={true}
-                    weekends={true}
-                    nowIndicator={true}
-                    events={events.map(event => ({
-                        id: event._id, 
-                        title: event.title,
-                        start: event.start,
-                        end: event.end,
-                        color: event.color
-                    }))}
-                    select={handleDateSelect}
-                    eventClick={handleEventClick}
-                    eventResize={handleEventResize}
-                    eventDrop={handleEventDrop}
-                />
+                            left: 'prev,next today',
+                            center: "title",
+                            right: "dayGridMonth,timeGridWeek,timeGridDay"
+                        }}
+                        allDaySlot={false}
+                        initialView="timeGridWeek"
+                        slotDuration={"01:00:00"}
+                        editable={true}
+                        selectable={true}
+                        selectMirror={true}
+                        dayMaxEvents={true}
+                        weekends={true}
+                        nowIndicator={true}
+                        events={events.map(event => ({
+                            id: event._id, 
+                            title: event.title,
+                            start: event.start,
+                            end: event.end,
+                            color: event.color
+                        }))}
+                        select={handleDateSelect}
+                        eventClick={handleEventClick}
+                        eventResize={handleEventResize}
+                        eventDrop={handleEventDrop}
+                    />
+            </div>
         </div>
     )
 }
