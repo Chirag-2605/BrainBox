@@ -1,15 +1,17 @@
 .calendar_component {
     height: 100vh;
     width: 100%;
-    background-color: #050815;
+    background: url('../../Assets/moon3.jpg') no-repeat;
+    background-size: cover;
     overflow: hidden;
     margin: 0px !important;
     padding: 0px !important;
+    display: flex;
 }
 
 /* Calendar Container */
 .calendar-container {
-    margin: 2rem 4rem !important;
+    margin: 2rem 0 2rem 1rem !important;
     height: 89.4vh;
     width: 95% !important;
     position: relative;
@@ -24,6 +26,10 @@
     margin: 0;
     padding: 0;
     width: 8.5rem !important;
+}
+
+.fc-toolbar-title {
+    color: #FFD699;
 }
 
 .fc-scrollgrid-shrink {
@@ -64,18 +70,18 @@
     background-color: rgba(66, 133, 244, 0.1);
 }
 
-/* Calendar Event Title */
-.fc-event-title {
-    font-weight: bold;
-}
-
 /* Calendar Button */
 .fc-button {
     border: none;
+    margin-top: 1rem;
     margin-right: 2rem !important;
-    border-radius: 10px !important;
+    border-radius: 20px !important;
     padding: 0.5rem 1rem !important;
     font-size: 1.05rem !important;
+}
+
+.fc-button-primary {
+    background-color: #FFA500 !important;
 }
 
 .fc-scrollgrid-sync-inner {
@@ -92,7 +98,7 @@
 }
 
 .fc-day-past, .fc-day-today, .fc-day-future {
-    width: 10.1rem;
+    width: 8.5rem;
 }
 
 a {
@@ -104,23 +110,24 @@ a {
 }
 
 .fc-event-main {
-    display: flex;
+    display: flex !important;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    justify-content: center !important;
+    align-items: center !important;
     overflow: hidden;
 }
 
 .fc-event-time {
-    margin-bottom: 0rem !important;
+    display: none;
 }
 
 .fc-event-title {
-    bottom: 10px !important;
     max-height: fit-content !important;
     text-align: center;
-    font-size: 0.7rem !important;
+    font-size: 0.8rem !important;
+    margin-bottom: 1rem;
     overflow: hidden !important;
+    font-weight: 600;
 }
 
 td {
@@ -138,46 +145,6 @@ td {
 /* Calendar Event Popup Close Button */
 .fc-close {
     color: #757575;
-}
-
-/* effect */
-.backgroundEffect {
-    height: 15rem;
-    width: 15rem;
-    background: linear-gradient(to right, #050815, #051c36, #053d60, #045f8b, #0577a0, #0a90b6, #05a6cc, #00c3e2);
-    z-index: -1;
-    position: absolute;
-    top: 5rem;
-    right: 0rem;
-    filter: blur(8px);
-    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-    animation: animate 5s ease-in-out infinite;
-}
-
-.backgroundEffect-top{
-    height: 10rem;
-    width: 10rem;
-    background: linear-gradient(to right, #050815, #0a252c, #195e2e, #3e8324, #6fae26, #a5d13a, #cef26f, #f2ffcd);
-    z-index: -1;
-    position: absolute;
-    top: -2rem;
-    left: 10rem;
-    filter: blur(6px);
-    border-radius: 72% 28% 15% 85% / 68% 15% 85% 32%;
-    animation: animate2 12s ease-in-out infinite;
-}
-
-.backgroundEffect-bottom {
-    height: 20rem;
-    width: 20rem;
-    background: linear-gradient(to right, #050815, #192426, #35403c, #4e5d51, #687a68, #88a48a, #adc5af, #d4e5d6);
-    z-index: -1;
-    position: absolute;
-    top: 30rem;
-    left: 10rem;
-    filter: blur(8px);
-    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-    animation: animate 5s ease-in-out infinite;
 }
 
 .fc-scroller::-webkit-scrollbar {
@@ -200,45 +167,4 @@ td {
 .fc-scroller::-webkit-scrollbar-thumb:hover {
     background-color: #555 !important;
     /* Color of the scrollbar thumb on hover */
-}
-
-
-@keyframes animate {
-    0% {
-        border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-    }
-
-    50% {
-        border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
-    }
-
-    100% {
-        border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-    }
-}
-
-@keyframes animate2 {
-    0% {
-        border-radius: 72% 28% 15% 85% / 68% 15% 85% 32%;
-    }
-
-    20% {
-        border-radius: 82% 18% 83% 17% / 84% 15% 85% 16%;
-    }
-
-    40% {
-        border-radius: 10% 90% 71% 29% / 17% 77% 23% 83%;
-    }
-
-    60% {
-        border-radius: 10% 90% 13% 87% / 17% 77% 23% 83%;
-    }
-
-    80% {
-        border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-    }
-
-    100% {
-        border-radius: 72% 28% 15% 85% / 68% 15% 85% 32%;
-    }
 }

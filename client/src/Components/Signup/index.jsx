@@ -4,7 +4,8 @@ import styles from './styles.module.css';
 import axios from 'axios';
 import Navbar from '../Navbar/navbar';
 import signupImage from '../../Assets/signup.png';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import React from 'react'
 
@@ -18,6 +19,10 @@ const Signup = () => {
     });
     const [error,setError] = useState("");
 
+    const diffToast = (mssg) => {
+        toast.success(mssg);
+    }
+
     const navigate = useNavigate()
 
     const handleChange = ({currentTarget: input}) => {
@@ -29,8 +34,8 @@ const Signup = () => {
         try {
             const url = "http://localhost:8080/api/user";
             const {data:res} = await axios.post(url,data);
-            navigate("/login");
-            console.log(res.message); 
+            navigate("/home");
+            diffToast('Signed Up successfully');
         } catch (error) {
             if(error.response && error.response.status>=400 && error.response.status<=500){
                 setError(error.response.data.message);
@@ -69,6 +74,7 @@ const Signup = () => {
                 </div>
             </div>
         </div>
+        <ToastContainer position='top-center'/>
     </>
     )
 }

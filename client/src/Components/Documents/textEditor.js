@@ -4,8 +4,12 @@ import "quill/dist/quill.snow.css";
 import { useCallback } from "react";
 import './TextEditor.css'
 import {io} from 'socket.io-client'
-import {useParams} from 'react-router-dom'
+import {useParams, useNavigate} from 'react-router-dom'
 import documentLogo from '../../Assets/document-logo.png'
+import axios  from 'axios'
+// Messages
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SAVE_INTERVAL_MS = 2000
 const TOOLBAR_OPTIONS = [
@@ -24,9 +28,15 @@ const TOOLBAR_OPTIONS = [
 const TextEditor = () => {
     const {id : docId} = useParams()
     const {name: docName} = useParams()
+    const {userId} = useParams()
     const [socket, setSocket] = useState();
     const [quill, setQuill] = useState();
 
+    const navigate = useNavigate();
+
+    const diffToast = (mssg) => {
+        toast.success(mssg);
+    }
 
     useEffect(()=>{
         const s = io("http://localhost:3001");
@@ -34,7 +44,7 @@ const TextEditor = () => {
         return () => {
             s.disconnect();
         }
-    }, [])
+    }, []);
 
     useEffect(()=>{
         if(socket == null || quill == null) return
@@ -68,7 +78,7 @@ const TextEditor = () => {
             quill.setContents(document)
             quill.enable()
         })
-        socket.emit('get-document', docId, docName)
+        socket.emit('get-document', docId, docName, userId)
     }, [socket, quill, docId])
 
     useEffect(()=> {
@@ -101,8 +111,32 @@ const TextEditor = () => {
         }
     }, [])
 
+    function handleDelete(docId) {
+        async function deleteDocument() {
+            if (!docId) {
+                console.log("Document ID is null or undefined");
+                return;
+            }
+            try {
+                const response = await axios.delete(`http://localhost:8080/documents/${docId}`);
+                if (response.status === 200) {
+                    diffToast('Event Deleted successfully');
+                    navigate('/documents');
+                } else {
+                    console.log(`Unexpected response status: ${response.status}`);
+                }
+            } catch (err) {
+                console.log(`Error while sending delete request: ${err.message}`);
+            }
+        }
+        deleteDocument();
+    }
+    
+
+
 
     return(
+        <>
         <div className='textEditor_component'>
             <div className='doc-header'>
                 <div className='doc_header_image'>
@@ -119,12 +153,15 @@ const TextEditor = () => {
                     <span>Extention</span>
                     <span>Help</span>
                 </div>
+                <button className='doc_delete' onClick={() => handleDelete(docId)}><i class="fa-solid fa-trash" style={{marginRight:'0.6rem'}}></i>Delete</button>
                 <button className='doc_save'><i class="fa-solid fa-cloud-arrow-up" style={{marginRight:'0.6rem'}}></i>Save</button>
                 <button className='doc_share'><i class="fa-solid fa-share-nodes" style={{marginRight:'0.6rem'}}></i>Share</button>
             </div>
             <div className='doc_container' ref ={wrapperRef}></div>
         </div>
+        <ToastContainer position='top-center'/>
+        </>
     )
 }
 
-export default TextEditor
+export default TextEditor;

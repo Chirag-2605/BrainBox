@@ -10,9 +10,9 @@ registerLicense('Ngo9BigBOggjHTQxAR8/V1NAaF1cVGhNYVJ3WmFZfVpgdl9CYFZVR2YuP1ZhSXx
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

@@ -98,12 +98,24 @@
     background-color: rgba(0, 0, 0, .1);
 }
 
-.textEditor_component .doc-header .doc_share, .textEditor_component .doc-header .doc_save {
+.textEditor_component .doc-header .doc_share, .textEditor_component .doc-header .doc_save, .textEditor_component .doc-header .doc_delete {
     position: absolute;
     right: 3rem;
     background-color:#c2e7ff;
     padding: 0.3rem 1rem;
     border-radius: 15px;
+    z-index: 2;
+}
+
+.doc_share:hover, .doc_delete:hover, .doc_save:hover {
+    border: 1px solid black;
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+}
+
+.textEditor_component .doc-header .doc_delete {
+    background-color: #db3030;
+    color: white;
+    right: 19rem;
 }
 
 .textEditor_component .doc-header .doc_save {

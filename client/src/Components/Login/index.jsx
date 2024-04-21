@@ -5,6 +5,8 @@ import axios from 'axios';
 import React from 'react'
 import Navbar from '../Navbar/navbar';
 import loginImage from '../../Assets/login.png';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [data,setData] = useState({
@@ -12,6 +14,11 @@ const Login = () => {
         password : "",
     });
     const [error,setError] = useState("");
+
+    const diffToast = (mssg) => {
+        toast.success(mssg);
+    }
+
 
     const handleChange = ({currentTarget: input}) => {
         setData({...data, [input.name] : input.value});
@@ -23,6 +30,7 @@ const Login = () => {
             const url = "http://localhost:8080/api/auth";
             const {data:res} = await axios.post(url,data);
             localStorage.setItem("token",res.data);
+            diffToast('Logged In successfully');
             window.location = "/home"
         } catch (error) {
             if(error.response && error.response.status>=400 && error.response.status<=500){
@@ -59,6 +67,7 @@ const Login = () => {
             </div>
             <div className='image' style={{marginRight:'5rem'}}><img src={loginImage} alt="Logo" /></div>
         </div>
+        <ToastContainer position='top-center'/>
         </>
     )
 }
