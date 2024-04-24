@@ -27,6 +27,16 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:id', async(req,res)=> {
+    try {
+        const event = await Event.findById(req.params.id);
+        res.json(event);
+    } catch(err) {
+        console.log("error in sending event to update: ", err)
+        res.status(500).json({error: 'Backend error'})
+    }
+})
+
 router.put('/:id', async(req,res)=> {
     const eventId = req.params.id;
     try {
@@ -34,6 +44,7 @@ router.put('/:id', async(req,res)=> {
         if (!updatedEvent) {
             return res.status(404).json({ error: 'Event not found' });
         }
+        console.log("event resize done");
         res.status(200).json(updatedEvent);
     } catch (error) {
         console.error('Error updating event:', error);

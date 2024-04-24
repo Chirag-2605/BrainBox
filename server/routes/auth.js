@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 const jwtSecret = process.env.JWT_SECRET;
 
-router.post('/', async(req,res)=>{
+router.post('/', async(req,res)=>{ 
     try{
         const {error} = validate(req.body);
         if(error){
@@ -26,7 +26,10 @@ router.post('/', async(req,res)=>{
             return res.status(401).send({message : "Invalid email or password"});
         }
 
-        const token = jwt.sign({_id: user._id}, jwtSecret, {expiresIn: '1h'});
+        const token = jwt.sign({_id: user._id, userId:user._id}, jwtSecret, {expiresIn: '1h'});
+
+        console.log(`User logged in: userId=${user._id}`);
+
         res.status(200).send({data:token, message:'Logged in successfully'});
     }catch(err) {
         console.log(err)

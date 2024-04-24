@@ -1,39 +1,66 @@
 .home_container {
-    margin: 0;
+    margin: 0rem;
     padding: 0;
     box-sizing: border-box;
     color: white;
     display: flex;
-    background-color: #050815;
+    background: url('../../Assets/home-bg.png') no-repeat;
+    background-size: cover;
 }
 
 .sidebar_div {
     width: 18.75rem;
+    margin-right: 0.7rem;
 }
 
 .homepage {
-    flex: 1;
-    /* background-color: red !important; */
-    transition: all 0.3s ease-in-out;
+    width: 100%;
 }
 
-.home_container.hide-sidebar .sidebar_div {
-    transform: translateX(-300px);
-    /* Hide sidebar */
+.homeContent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 1.5rem;
+    width: 40.5rem;
+    height: 100%;
 }
 
-.home_container.hide-sidebar .homepage {
-    padding-left: 0;
-    /* No padding on left side */
+.homeContent_heading {
+    font-size: 3rem;
+    font-weight: 700;
 }
 
-/* When the sidebar is visible */
-.home_container:not(.hide-sidebar) .sidebar_div {
-    transform: translateX(0);
-    /* Show sidebar */
+.homeContent p {
+    font-size: 1.2rem;
 }
 
-.home_container:not(.hide-sidebar) .homepage {
-    padding-left: 300px;
-    /* Add padding to match sidebar width */
+.homeContent li p {
+    margin-bottom: 0.9rem;
+    font-size: 1rem;
 }
+
+.headerImg img {    
+    height: 26rem;
+    width: 26rem;
+    position: absolute;
+    right: 5rem;
+    bottom: 2rem;
+    animation: updown 3s linear infinite;
+}
+
+@keyframes updown {
+    0% {
+        transform: translateY(-20px);
+    }
+
+    50% {
+        transform: translateY(20px);
+    }
+
+    100% {
+        transform: translateY(-20px);
+    }
+}
+

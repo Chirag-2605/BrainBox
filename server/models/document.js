@@ -12,6 +12,10 @@ const Document = new Schema({
     name:{
         type: String,
         required: true,
+    },
+    ownerId : {
+        type: String,
+        required: true,
     }
 })
 

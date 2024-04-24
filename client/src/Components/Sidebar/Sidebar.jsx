@@ -19,7 +19,7 @@ const Sidebar = () => {
                     <span>BrainBox</span>
                 </div>
                 <div className="but_two">
-                    <label for="check">
+                    <label for="check"> 
                         <i className="fa-solid fa-x"></i>
                     </label>
                 </div>
