@@ -20,7 +20,7 @@ function App() {
       <Route path='/landing' element={<Landing />}></Route>
       <Route path='/home' element={<Home></Home>}></Route>
       <Route path='/calendar' element={<Calendar></Calendar>}></Route>
-      <Route path='/board' element={<Board></Board>}></Route>
+      <Route path='/board/:title/:id' element={<Board></Board>}></Route>
       {/* document */}
       <Route path='/documents' element={<Document></Document>}></Route>
       <Route path='/documents/:name/:id' element={<TextEditor />}></Route>

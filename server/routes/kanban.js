@@ -1,61 +1,77 @@
 const express = require('express');
 const router = express.Router();
-const {kanbanTodoSchema:KanbanTodo} = require('../models/user.js');
+const KanbanTodo = require('../models/kanbanTodo');
+const Column = require('../models/column');
+const Card = require('../models/card');
 
-// Create a new Kanban Todo
-router.post('/', async (req, res) => {
+router.post('/:id', async (req, res) => {
+    console.log("Control reached here");
     try {
-        const { title, columns } = req.body;
-        const newKanbanTodo = new KanbanTodo({ title, columns });
+        const { title, columns, cards } = req.body;
+        const boardId = req.params.id;
+        
+        // Save columns and cards and convert their UUIDs to strings
+        const columnInstances = await Promise.all(columns.map(columnData => new Column(columnData).save()));
+        const cardInstances = await Promise.all(cards.map(cardData => new Card(cardData).save()));
+
+        // Create a new KanbanTodo instance with string UUIDs for columns and cards
+        const newKanbanTodo = new KanbanTodo({
+            _id: boardId,
+            title,
+            columns: columnInstances.map(column => column._id.toString()),
+            cards: cardInstances.map(card => card._id.toString())
+        });
+        // Save the new KanbanTodo instance
         await newKanbanTodo.save();
+        
+        // Populate columns and cards fields before sending the response
+        await KanbanTodo.populate(newKanbanTodo, { path: 'columns cards' });
+        
+        // Send the response with the new KanbanTodo instance
         res.status(201).json(newKanbanTodo);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: error.message });
     }
 });
 
-// Get all Kanban Todos
-router.get('/', async (req, res) => {
-    try {
-        const kanbanTodos = await KanbanTodo.find();
-        res.json(kanbanTodos);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Get a Kanban Todo by ID
 router.get('/:id', async (req, res) => {
     try {
-        const kanbanTodo = await KanbanTodo.findById(req.params.id);
+        const id = req.params.id;
+        const kanbanTodo = await KanbanTodo.findById(id).populate('columns').populate('cards');
+        
         if (!kanbanTodo) {
             return res.status(404).json({ message: 'Kanban Todo not found' });
         }
+        
         res.json(kanbanTodo);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-// Update a Kanban Todo
 router.put('/:id', async (req, res) => {
     try {
+        const id = req.params.id;
         const { title, columns } = req.body;
         const updatedKanbanTodo = await KanbanTodo.findByIdAndUpdate(
-            req.params.id,
+            id,
             { title, columns },
             { new: true }
         );
+        if (!updatedKanbanTodo) {
+            return res.status(404).json({ message: 'Kanban Todo not found' });
+        }
         res.json(updatedKanbanTodo);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-// Delete a Kanban Todo
-router.delete('/api/kanban-todos/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
-        const deletedKanbanTodo = await KanbanTodo.findByIdAndDelete(req.params.id);
+        const id = req.params.id;
+        const deletedKanbanTodo = await KanbanTodo.findByIdAndDelete(id);
         if (!deletedKanbanTodo) {
             return res.status(404).json({ message: 'Kanban Todo not found' });
         }
@@ -66,3 +82,4 @@ router.delete('/api/kanban-todos/:id', async (req, res) => {
 });
 
 module.exports = router;
+

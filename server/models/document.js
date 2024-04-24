@@ -1,4 +1,5 @@
-const {Schema, model} = require('mongoose')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema;
 
 const Document = new Schema({
     _id: {
@@ -14,4 +15,4 @@ const Document = new Schema({
     }
 })
 
-module.exports = model("Document", Document);
+module.exports = mongoose.model("Document", Document);

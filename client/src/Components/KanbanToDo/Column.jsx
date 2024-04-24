@@ -1,30 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import DropIndicator from "./DropIndicator";
 import AddCard from "./AddCard";
 import axios from "axios";
 
-const Column = ({ title, headingColor, cards, column, setCards }) => {
+const Column = ({ title,boardId, headingColor, cards, columnId, setCards }) => {
   const [editedTitle, setEditedTitle] = useState(title);
   const [isEditing, setIsEditing] = useState(false);
   const [active, setActive] = useState(false);
-  const [columnId, setColumnId] = useState(null);
-
-  useEffect(() => {
-    // Fetch column data when the component mounts
-    fetchColumnData();
-  }, []);
-
-  const fetchColumnData = () => {
-    axios.get(`/api/columns?title=${title}`)
-      .then(response => {
-        const { _id } = response.data; 
-        setColumnId(_id);
-      })
-      .catch(error => {
-        console.error('Error fetching column data:', error);
-      });
-  };
 
   const handleTitleChange = (e) => {
     setEditedTitle(e.target.value);
@@ -32,11 +15,9 @@ const Column = ({ title, headingColor, cards, column, setCards }) => {
 
   const handleTitleBlur = () => {
     if (editedTitle.trim() !== "") {
-      // Update column title
-      axios.patch(`/api/columns/${columnId}`, { title: editedTitle })
+      axios.patch(`http://localhost:8080/api/column/${columnId}`, { title: editedTitle })
         .then(response => {
           console.log('Column title updated:', response.data);
-          // You can update the UI if needed
         })
         .catch(error => {
           console.error('Error updating column title:', error);
@@ -44,75 +25,73 @@ const Column = ({ title, headingColor, cards, column, setCards }) => {
     }
     setIsEditing(false);
   };
+
   const handleDragStart = (e, card) => {
-    e.dataTransfer.setData("cardId", card.id);
+    e.dataTransfer.setData("cardId", card._id);
   };
 
-  const handleDragEnd = (e) => {
+  const handleDragEnd = async(e) => {
     const cardId = e.dataTransfer.getData("cardId");
-
+  
     setActive(false);
     clearHighlights();
-
+  
     const indicators = getIndicators();
     const { element } = getNearestIndicator(e, indicators);
-
+  
     const before = element.dataset.before || "-1";
-
+    console.log(before);
+  
     if (before !== cardId) {
       let copy = [...cards];
-
-      let cardToTransfer = copy.find((c) => c.id === cardId);
+  
+      let cardToTransfer = copy.find((c) => c._id === cardId);
       if (!cardToTransfer) return;
-      cardToTransfer = { ...cardToTransfer, column };
-
-      copy = copy.filter((c) => c.id !== cardId);
-
+      cardToTransfer = { ...cardToTransfer, column_id: columnId }; 
+  
+      copy = copy.filter((c) => c._id !== cardId);
+  
       const moveToBack = before === "-1";
-
+      console.log(cardToTransfer);
       if (moveToBack) {
         copy.push(cardToTransfer);
       } else {
-        const insertAtIndex = copy.findIndex((el) => el.id === before);
-        if (insertAtIndex === undefined) return;
-
+        const insertAtIndex = copy.findIndex((el) => el._id === before);
+        if (insertAtIndex === -1) return; 
+  
         copy.splice(insertAtIndex, 0, cardToTransfer);
       }
-
+      console.log(cards);
       setCards(copy);
+      try {
+        
+        const response = await axios.put(`http://localhost:8080/api/card/${boardId}`, {cards,cardId,columnId});
+
+       
+      } catch (error) {
+        // Handle network error
+        console.error('Network error:', error.message);
+      }
+      
+      
     }
-    axios.patch(`/api/columns/${columnId}/cards`, { cards: filteredCards })
-    .then(response => {
-      console.log('Card order updated:', response.data);
-    })
-    .catch(error => {
-      console.error('Error updating card order:', error);
-    });
+    
   };
+  
+    
+  
 
   const handleDragOver = (e) => {
     e.preventDefault();
-    highlightIndicator(e);
-
     setActive(true);
   };
 
-  const clearHighlights = (els) => {
-    const indicators = els || getIndicators();
-
-    indicators.forEach((i) => {
-      i.style.opacity = "0";
-    });
+  const clearHighlights = () => {
+    setActive(false);
   };
 
-  const highlightIndicator = (e) => {
-    const indicators = getIndicators();
-
-    clearHighlights(indicators);
-
-    const el = getNearestIndicator(e, indicators);
-
-    el.element.style.opacity = "1";
+  const getIndicators = () => {
+    return Array.from(document.querySelectorAll(`[data-column="${columnId}"]`));
   };
 
   const getNearestIndicator = (e, indicators) => {
@@ -139,16 +118,11 @@ const Column = ({ title, headingColor, cards, column, setCards }) => {
     return el;
   };
 
-  const getIndicators = () => {
-    return Array.from(document.querySelectorAll(`[data-column="${column}"]`));
-  };
-
   const handleDragLeave = () => {
     clearHighlights();
-    setActive(false);
   };
 
-  const filteredCards = cards.filter((c) => c.column === column);
+  const filteredCards = cards.filter((c) => c.column_id === columnId);
 
   return (
     <div className="w-56 shrink-0">
@@ -176,15 +150,22 @@ const Column = ({ title, headingColor, cards, column, setCards }) => {
         onDrop={handleDragEnd}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        className={`h-full w-full transition-colors ${
-          active ? "bg-neutral-800/50" : "bg-neutral-800/0"
-        }`}
+        className={`h-full w-full transition-colors
+        ${active ? "bg-neutral-800/50" : "bg-neutral-800/0"}
+        `}
       >
-        {filteredCards.map((c) => {
-          return <Card key={c.id} {...c} handleDragStart={handleDragStart} />;
-        })}
-        <DropIndicator beforeId={null} column={column} />
-        <AddCard column={column} setCards={setCards} />
+        {filteredCards.map((c) => (
+          <Card
+            key={c._id}
+            title={c.title} 
+            _id={c._id} 
+            columnId={columnId}
+            handleDragStart={handleDragStart}
+            board_id={boardId}
+          />
+        ))}
+        <DropIndicator beforeId={null} column={columnId} />
+        <AddCard boardId={boardId} column={columnId} setCards={setCards} />
       </div>
     </div>
   );

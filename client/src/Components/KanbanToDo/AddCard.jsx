@@ -2,25 +2,34 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FiPlus } from "react-icons/fi";
 import axios from "axios";
-const AddCard = ({ column, setCards }) => {
+import { v4 as uuidv4 } from "uuid";
+const AddCard = ({boardId,column, setCards }) => {
   const [text, setText] = useState("");
   const [adding, setAdding] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     if (!text.trim().length) return;
 
     const newCard = {
-      column,
+      column_id: column,
       title: text.trim(),
-      id: Math.random().toString(),
+      _id:uuidv4(),
+      board_id:boardId 
     };
 
-    setCards((pv) => [...pv, newCard]);
-
+    try {
+      const response = await axios.post('http://localhost:8080/api/card', newCard);
+      console.log('New card created:', response.data);
+      setCards((prevCards) => [...prevCards, response.data]);
+      setAdding(false);
+      setText('');
+    } catch (error) {
+      console.error('Error creating new card:', error);
+    }
     setAdding(false);
-    setText(""); // Clear input after submission
+    setText(""); 
   };
 
   return (
