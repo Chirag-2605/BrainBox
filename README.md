@@ -1,4 +1,4 @@
-# Project Name
+# BrainBox
 
 ## Description
 This project aims to provide a comprehensive and flexible workspace akin to Notion, allowing users to organize and manage their tasks, notes, documents, and more in a centralized and intuitive manner.
