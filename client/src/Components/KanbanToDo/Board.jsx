@@ -1,16 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import Column from "./Column";
 import BurnBarrel from "./BurnBarrel";
 import { DEFAULT_CARDS } from "../../data";
 import axios from "axios";
+import {jwtDecode} from 'jwt-decode';
 
 const Board = () => {
   const { id: boardId, title: boardTitle } = useParams();
   const [columns, setColumns] = useState([]);
   const [cards, setCards] = useState([]);
-
+  const [userId, setUserId] = useState(null);
+  const navigate=useNavigate();
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+        if(token) {
+            try {
+                const decodedToken = jwtDecode(token);
+                const userId = decodedToken.userId || decodedToken._id;
+                setUserId(userId);
+            } catch(err) {
+                console.log("error while fetching token: ", err)
+            }
+        }
+    fetchKanban();
+  })
   const createNewBoard = async () => {
     const defaultColumns = [
       { _id: uuidv4(), title: "Backlog", headingColor: "text-neutral-500", board_id: boardId },
@@ -43,7 +58,7 @@ const Board = () => {
     };
 
     try {
-      const response = await axios.post(`http://localhost:8080/api/kanban-todos/${boardId}`, newBoard);
+      const response = await axios.post(`http://localhost:8080/api/kanban-todos/${userId}/${boardId}`, newBoard);
       setColumns(response.data.columns);
       setCards(response.data.cards);
       
@@ -73,10 +88,6 @@ const Board = () => {
       }
     }
   };
-
-  useEffect(() => {
-    fetchKanban();
-  }, []);
 
   const addColumn = () => {
     const newColumn = {
@@ -127,7 +138,17 @@ const Board = () => {
         console.error("Error updating column title:", error);
       });
   };
+  const deleteBoard=async()=>{
+    try{
+      const response=await axios.delete(`http://localhost:8080/api/kanban-todos/${userId}/${boardId}`);
+      console.log(response);
+      navigate('/board');
+    }
+    catch(error){
+      console.error("Error in deleting the board"+error);
+    }
 
+  }
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="bg-gray-200 py-6">
@@ -140,6 +161,11 @@ const Board = () => {
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-4"
           >
             Add New Column
+          </button>
+          <button onClick={deleteBoard}
+          className="bg-red-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-4"
+          >
+            Delete board
           </button>
         </div>
       </div>

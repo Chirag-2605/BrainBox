@@ -13,6 +13,7 @@ const kanbanRouter = require('./routes/kanban.js');
 const documentRouter = require('./routes/document.js');
 const columnRouter=require('./routes/column.js');
 const cardRouter=require('./routes/card.js');
+const allKanbanRouter=require('./routes/allKanban.js');
 // database connection
 connection();
 
@@ -25,6 +26,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/kanban-todos', kanbanRouter);
+app.use('/api/all-kanban-todos', allKanbanRouter);
 app.use('/api/column', columnRouter);
 app.use('/api/card', cardRouter);
 app.use('/', documentRouter);
